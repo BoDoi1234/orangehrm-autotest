@@ -1,4 +1,4 @@
-package demo.orangehrm.demo;
+package demo.orangehrm;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
