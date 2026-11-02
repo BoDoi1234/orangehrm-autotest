@@ -1,0 +1,12 @@
+XPATH AXES (Refer: https://www.w3schools.com/xml/xpath_axes.asp)
+- parent: xpath/parent::<tagName>[] (//input[@name="username"]/parent::div[@class])
+- ancestor: xpath/ancestor::<tagName>[] (//input[@name="username"]/ancestor::div)
+- child: xpath/child::<tagName>[]
+- following-sibling: xpath/following-sibling::<tagName>[]
+- following:
+- preceding-sibling: xpath/preceding-sibling::<tagName>[]
+- preceding:
+- self: xpath/self::*
+- ancestor-or-self:
+- descendant: child/grandchild/...
+- descendant-or-self:
