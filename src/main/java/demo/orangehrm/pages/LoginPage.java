@@ -8,9 +8,9 @@ public class LoginPage extends BasePage {
     private final By usernameTextBox = By.name("username");
     private final By passwordTextBox = By.name("password");
     private final By loginButton = By.cssSelector("button[class*='login-button']");
+    private final By loginForm = By.xpath("//form[@method='post']");
 
     public LoginPage(ChromeDriver chromeDriver) {
-        super();
         this.chromeDriver = chromeDriver;
     }
 
@@ -26,5 +26,25 @@ public class LoginPage extends BasePage {
 
     public void clickLoginButton() {
         chromeDriver.findElement(loginButton).click();
+    }
+
+    public void submitFormLogin() {
+        chromeDriver.findElement(loginForm).submit();
+    }
+
+    public boolean checkLoginButtonIsEnabled() {
+        return chromeDriver.findElement(loginButton).isEnabled();
+    }
+
+    public String getBackgroundColorOfLoginButton() {
+        return getCssValueOf("background-color", chromeDriver.findElement(loginButton));
+    }
+
+    public String getColorOfLoginButton() {
+        return getCssValueOf("color", chromeDriver.findElement(loginButton));
+    }
+
+    public String getAttributeNameOfUsername() {
+        return chromeDriver.findElement(usernameTextBox).getAttribute("name");
     }
 }
