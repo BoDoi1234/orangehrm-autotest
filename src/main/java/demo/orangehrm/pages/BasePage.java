@@ -1,5 +1,6 @@
 package demo.orangehrm.pages;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class BasePage {
@@ -22,5 +23,13 @@ public class BasePage {
 
     public String getCurrentUrl() {
         return chromeDriver.getCurrentUrl();
+    }
+
+    public String getTitle() {
+        return chromeDriver.getTitle();
+    }
+
+    public String getCssValueOf(String cssAttribute, WebElement webElement) {
+        return webElement.getCssValue(cssAttribute);
     }
 }
