@@ -1,50 +1,47 @@
 package demo.orangehrm.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
-    private final ChromeDriver chromeDriver;
     private final By usernameTextBox = By.name("username");
     private final By passwordTextBox = By.name("password");
     private final By loginButton = By.cssSelector("button[class*='login-button']");
     private final By loginForm = By.xpath("//form[@method='post']");
 
-    public LoginPage(ChromeDriver chromeDriver) {
-        this.chromeDriver = chromeDriver;
+    public LoginPage(WebDriver driver) {
+        super(driver);
     }
 
     public void inputUsername(String username) {
-        chromeDriver.findElement(usernameTextBox).clear();
-        chromeDriver.findElement(usernameTextBox).sendKeys(username);
+        sendKeys(usernameTextBox, username);
     }
 
     public void inputPassword(String password) {
-        chromeDriver.findElement(passwordTextBox).clear();
-        chromeDriver.findElement(passwordTextBox).sendKeys(password);
+        sendKeys(passwordTextBox, password);
     }
 
     public void clickLoginButton() {
-        chromeDriver.findElement(loginButton).click();
+        click(loginButton);
     }
 
     public void submitFormLogin() {
-        chromeDriver.findElement(loginForm).submit();
+        submitForm(loginForm);
     }
 
     public boolean checkLoginButtonIsEnabled() {
-        return chromeDriver.findElement(loginButton).isEnabled();
+        return isElementEnable(loginButton);
     }
 
     public String getBackgroundColorOfLoginButton() {
-        return getCssValueOf("background-color", chromeDriver.findElement(loginButton));
+        return getCssValueOf(loginButton, "background-color");
     }
 
     public String getColorOfLoginButton() {
-        return getCssValueOf("color", chromeDriver.findElement(loginButton));
+        return getCssValueOf(loginButton, "color");
     }
 
     public String getAttributeNameOfUsername() {
-        return chromeDriver.findElement(usernameTextBox).getAttribute("name");
+        return getAttribute(usernameTextBox, "name");
     }
 }
