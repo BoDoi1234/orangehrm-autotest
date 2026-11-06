@@ -1,23 +1,21 @@
 package demo.orangehrm.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 
 public class TopHeader extends BasePage {
-    private final ChromeDriver chromeDriver;
     private final By pageTitleHeading = By.cssSelector("span[class*='topbar-header-breadcrumb']");
     private final By profileImage = By.cssSelector("img[class*='userdropdown-img']");
 
-    public TopHeader(ChromeDriver chromeDriver) {
-        this.chromeDriver = chromeDriver;
+    public TopHeader(WebDriver driver) {
+        super(driver);
     }
 
-
     public String getPageTitle() {
-        return chromeDriver.findElement(pageTitleHeading).getText();
+        return getText(pageTitleHeading);
     }
 
     public boolean getDisplayOfProfileImage() {
-        return chromeDriver.findElement(profileImage).isDisplayed();
+        return isElementDisplay(profileImage);
     }
 }
