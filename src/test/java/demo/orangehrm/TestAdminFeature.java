@@ -1,36 +1,49 @@
 package demo.orangehrm;
 
 import demo.orangehrm.pages.AdminPage;
-import demo.orangehrm.pages.BasePage;
 import demo.orangehrm.pages.LoginPage;
 import demo.orangehrm.pages.NavigationPanel;
-import org.openqa.selenium.chrome.ChromeDriver;
+import demo.orangehrm.utils.DriverUtils;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestAdminFeature {
-    @Test
-    void testRecordCheckboxBehavior() throws InterruptedException {
+    private AdminPage adminPage;
+    private DriverUtils driverUtils;
+    private WebDriver driver;
+
+    @BeforeMethod
+    void setUp() {
+        // Init browser
+        driverUtils = new DriverUtils();
+        driver = driverUtils.initBrowser();
+
         // Open login url
-        BasePage basePage = new BasePage();
-        basePage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
         // Login account
-        ChromeDriver chromeDriver = basePage.getChromeDriver();
-        LoginPage loginPage = new LoginPage(chromeDriver);
-        Thread.sleep(5000);
-
         loginPage.inputUsername("Admin");
         loginPage.inputPassword("admin123");
         loginPage.clickLoginButton();
-        Thread.sleep(5000);
 
         // Open Admin Page
-        NavigationPanel navigationPanel = new NavigationPanel(chromeDriver);
+        NavigationPanel navigationPanel = new NavigationPanel(driver);
         navigationPanel.clickAdminMenu();
-        Thread.sleep(5000);
+        adminPage = new AdminPage(driver);
+    }
 
-        AdminPage adminPage = new AdminPage(chromeDriver);
+    @AfterMethod
+    void tearDown() {
+        // Quit browser
+        driverUtils.quitBrowser(driver);
+    }
+
+    @Test
+    void testRecordCheckboxBehavior() {
         boolean firstRecordCheckboxIsChecked = adminPage.isFirstRecordCheckboxChecked();
         Assert.assertFalse(firstRecordCheckboxIsChecked, "Default status of 1st record checkbox is checked");
 
