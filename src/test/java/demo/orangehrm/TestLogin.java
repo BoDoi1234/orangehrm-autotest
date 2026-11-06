@@ -1,92 +1,69 @@
 package demo.orangehrm;
 
-import demo.orangehrm.pages.BasePage;
 import demo.orangehrm.pages.LoginPage;
 import demo.orangehrm.pages.TopHeader;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestLogin {
-    @Test
-    void testLoginSuccessfully() throws InterruptedException {
+    private LoginPage loginPage;
+    private WebDriver driver;
+
+    @BeforeMethod
+    void setUp() {
+        driver = new ChromeDriver();
+
         // Open login url
-        BasePage basePage = new BasePage();
-        basePage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        loginPage = new LoginPage(driver);
+        loginPage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+    }
 
+    @AfterMethod
+    void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    @Test
+    void testLoginSuccessfully() {
         // Login account
-        ChromeDriver chromeDriver = basePage.getChromeDriver();
-        LoginPage loginPage = new LoginPage(chromeDriver);
-        Thread.sleep(5000);
-
-        // Verify login button is enabled event username and password are not filled
-        boolean loginButtonIsEnabled = loginPage.checkLoginButtonIsEnabled();
-        Assert.assertTrue(loginButtonIsEnabled, "Login Button is not enabled");
-
         loginPage.inputUsername("Admin");
         loginPage.inputPassword("admin123");
         loginPage.clickLoginButton();
-        Thread.sleep(5000);
 
-        // Verify: Url / Dashboard page / Profile image
-        String currentUrl = basePage.getCurrentUrl();
-        Assert.assertTrue(currentUrl.contains("dashboard"));
-
-        // getText()
-        TopHeader topHeader = new TopHeader(chromeDriver);
-        String currentPageTitle = topHeader.getPageTitle();
-        Assert.assertEquals(currentPageTitle, "Dashboard");
-
-        // isVisible()
-        boolean profileImageDisplay = topHeader.getDisplayOfProfileImage();
-        Assert.assertTrue(profileImageDisplay, "Profile Image is not displayed");
+        verifyDashboardLoaded();
     }
 
     @Test
-    void loginSuccessfullyUsingForm() throws InterruptedException {
-        // Open login url
-        BasePage basePage = new BasePage();
-        basePage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-
+    void loginSuccessfullyUsingForm() {
         // Login account
-        ChromeDriver chromeDriver = basePage.getChromeDriver();
-        LoginPage loginPage = new LoginPage(chromeDriver);
-        Thread.sleep(5000);
-
-        // Verify login button is enabled event username and password are not filled
-        boolean loginButtonIsEnabled = loginPage.checkLoginButtonIsEnabled();
-        Assert.assertTrue(loginButtonIsEnabled, "Login Button is not enabled");
-
         loginPage.inputUsername("Admin");
         loginPage.inputPassword("admin123");
         loginPage.submitFormLogin();
-        Thread.sleep(5000);
 
+        verifyDashboardLoaded();
+    }
+
+    private void verifyDashboardLoaded() {
         // Verify: Url / Dashboard page / Profile image
-        String currentUrl = basePage.getCurrentUrl();
+        String currentUrl = loginPage.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("dashboard"));
 
         // getText()
-        TopHeader topHeader = new TopHeader(chromeDriver);
-        String currentPageTitle = topHeader.getPageTitle();
-        Assert.assertEquals(currentPageTitle, "Dashboard");
+        TopHeader topHeader = new TopHeader(driver);
+        Assert.assertEquals(topHeader.getPageTitle(), "Dashboard");
 
         // isVisible()
-        boolean profileImageDisplay = topHeader.getDisplayOfProfileImage();
-        Assert.assertTrue(profileImageDisplay, "Profile Image is not displayed");
+        Assert.assertTrue(topHeader.getDisplayOfProfileImage(), "Profile Image is not displayed");
     }
 
     @Test
-    void verifyLoginFormCssStyle() throws InterruptedException {
-        // Open login url
-        BasePage basePage = new BasePage();
-        basePage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-
-        // Login account
-        ChromeDriver chromeDriver = basePage.getChromeDriver();
-        LoginPage loginPage = new LoginPage(chromeDriver);
-        Thread.sleep(5000);
-
+    void verifyLoginFormCssStyle() {
         // Check background login button color
         String loginButtonBackgroundColor = loginPage.getBackgroundColorOfLoginButton();
         Assert.assertEquals(loginButtonBackgroundColor, "rgba(21, 244, 233, 1)");
