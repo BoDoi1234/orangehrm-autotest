@@ -1,5 +1,7 @@
 package demo.orangehrm.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,8 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BasePage {
-    private final WebDriver driver;
-    private final WebDriverWait wait;
+    private final Logger logger = LogManager.getLogger(BasePage.class);
+    protected final WebDriver driver;
+    protected final WebDriverWait wait;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -19,10 +22,15 @@ public class BasePage {
 
     public void openUrl(String url) {
         driver.get(url);
+        logger.info("Access to {}\n", url);
     }
 
     public WebElement waitForElementPresence(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    public WebElement waitForElementVisibility(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public WebElement waitForElementClickable(By locator) {
@@ -34,7 +42,7 @@ public class BasePage {
     }
 
     public String getText(By locator) {
-        return waitForElementPresence(locator).getText();
+        return waitForElementVisibility(locator).getText();
     }
 
     public String getCssValueOf(By locator, String propertyName) {
@@ -46,7 +54,7 @@ public class BasePage {
     }
 
     public void sendKeys(By locator, String text) {
-        WebElement element = waitForElementPresence(locator);
+        WebElement element = waitForElementVisibility(locator);
         element.clear();
         element.sendKeys(text);
     }
@@ -59,12 +67,12 @@ public class BasePage {
         waitForElementPresence(locator).submit();
     }
 
-    public boolean isElementEnable(By locator) {
+    public boolean isElementEnabled(By locator) {
         return waitForElementPresence(locator).isEnabled();
     }
 
-    public boolean isElementDisplay(By locator) {
-        return waitForElementPresence(locator).isDisplayed();
+    public boolean isElementDisplayed(By locator) {
+        return waitForElementVisibility(locator).isDisplayed();
     }
 
     public boolean isElementSelected(By locator) {

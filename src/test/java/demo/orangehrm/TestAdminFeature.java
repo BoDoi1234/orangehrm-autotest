@@ -32,8 +32,7 @@ public class TestAdminFeature {
 
         // Open Admin Page
         NavigationPanel navigationPanel = new NavigationPanel(driver);
-        navigationPanel.clickAdminMenu();
-        adminPage = new AdminPage(driver);
+        adminPage = navigationPanel.clickAdminMenu();
     }
 
     @AfterMethod

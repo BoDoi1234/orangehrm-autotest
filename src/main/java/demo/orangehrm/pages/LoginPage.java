@@ -1,9 +1,12 @@
 package demo.orangehrm.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
+    private final Logger logger = LogManager.getLogger(LoginPage.class);
     private final By usernameTextBox = By.name("username");
     private final By passwordTextBox = By.name("password");
     private final By loginButton = By.cssSelector("button[class*='login-button']");
@@ -15,33 +18,45 @@ public class LoginPage extends BasePage {
 
     public void inputUsername(String username) {
         sendKeys(usernameTextBox, username);
+        logger.info("Type {} in username textbox", username);
     }
 
     public void inputPassword(String password) {
         sendKeys(passwordTextBox, password);
+        logger.info("Type {} in password textbox", password);
     }
 
     public void clickLoginButton() {
         click(loginButton);
+        logger.info("Click login button\n");
     }
 
     public void submitFormLogin() {
         submitForm(loginForm);
+        logger.info("Submit form login\n");
     }
 
     public boolean checkLoginButtonIsEnabled() {
-        return isElementEnable(loginButton);
+        boolean isEnabled = isElementEnabled(loginButton);
+        logger.info("Login button {} enabled\n", isEnabled ? "is" : "is not");
+        return isEnabled;
     }
 
     public String getBackgroundColorOfLoginButton() {
-        return getCssValueOf(loginButton, "background-color");
+        String backgroundColorOfLoginButton = getCssValueOf(loginButton, "background-color");
+        logger.info("Background color of Login button is {}\n", backgroundColorOfLoginButton);
+        return backgroundColorOfLoginButton;
     }
 
     public String getColorOfLoginButton() {
-        return getCssValueOf(loginButton, "color");
+        String colorOfLoginButton = getCssValueOf(loginButton, "color");
+        logger.info("Color of Login button is {}\n", colorOfLoginButton);
+        return colorOfLoginButton;
     }
 
     public String getAttributeNameOfUsername() {
-        return getAttribute(usernameTextBox, "name");
+        String attributeNameOfUsername = getAttribute(usernameTextBox, "name");
+        logger.info("Attribute of Username is {}\n", attributeNameOfUsername);
+        return attributeNameOfUsername;
     }
 }

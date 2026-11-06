@@ -1,10 +1,13 @@
 package demo.orangehrm.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.pagefactory.ByChained;
 
 public class AdminPage extends BasePage {
+    private final Logger logger = LogManager.getLogger(AdminPage.class);
     private final By firstRecordCheckbox = By.xpath("//*[contains(@class, 'table-body')]/*[2]//input[contains(@type, 'checkbox')]");
 
     public AdminPage(WebDriver driver) {
@@ -12,7 +15,9 @@ public class AdminPage extends BasePage {
     }
 
     public boolean isFirstRecordCheckboxChecked() {
-        return isElementSelected(firstRecordCheckbox);
+        boolean isSelected = isElementSelected(firstRecordCheckbox);
+        logger.info("First Record checkbox {} checked\n", isSelected ? "is" : "is not");
+        return isSelected;
     }
 
     public void clickFirstRecordCheckbox() {
@@ -20,6 +25,6 @@ public class AdminPage extends BasePage {
                 firstRecordCheckbox, By.xpath(".//parent::*")
         );
         click(checkboxLocator);
-//        chromeDriver.findElement(firstRecordCheckbox).findElement(By.xpath(".//parent::*")).click();
+        logger.info("Selected checkbox of First Record\n");
     }
 }
