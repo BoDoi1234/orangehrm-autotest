@@ -2,8 +2,8 @@ package demo.orangehrm;
 
 import demo.orangehrm.pages.LoginPage;
 import demo.orangehrm.pages.TopHeader;
+import demo.orangehrm.utils.DriverUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -11,11 +11,14 @@ import org.testng.annotations.Test;
 
 public class TestLogin {
     private LoginPage loginPage;
+    private DriverUtils driverUtils;
     private WebDriver driver;
 
     @BeforeMethod
     void setUp() {
-        driver = new ChromeDriver();
+        // Init browser
+        driverUtils = new DriverUtils();
+        driver = driverUtils.initBrowser();
 
         // Open login url
         loginPage = new LoginPage(driver);
@@ -24,9 +27,7 @@ public class TestLogin {
 
     @AfterMethod
     void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        driverUtils.quitBrowser(driver);
     }
 
     @Test
