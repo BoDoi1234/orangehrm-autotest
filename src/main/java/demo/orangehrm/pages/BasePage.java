@@ -18,12 +18,11 @@ public class BasePage {
     }
 
     public void openUrl(String url) {
-        driver.manage().window().maximize();
         driver.get(url);
     }
 
-    public WebElement waitForElementVisible(By locator) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public WebElement waitForElementPresence(By locator) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     public WebElement waitForElementClickable(By locator) {
@@ -35,19 +34,19 @@ public class BasePage {
     }
 
     public String getText(By locator) {
-        return waitForElementVisible(locator).getText();
+        return waitForElementPresence(locator).getText();
     }
 
     public String getCssValueOf(By locator, String propertyName) {
-        return waitForElementVisible(locator).getCssValue(propertyName);
+        return waitForElementPresence(locator).getCssValue(propertyName);
     }
 
     public String getAttribute(By locator, String attributeName) {
-        return waitForElementVisible(locator).getAttribute(attributeName);
+        return waitForElementPresence(locator).getAttribute(attributeName);
     }
 
     public void sendKeys(By locator, String text) {
-        WebElement element = waitForElementVisible(locator);
+        WebElement element = waitForElementPresence(locator);
         element.clear();
         element.sendKeys(text);
     }
@@ -57,14 +56,18 @@ public class BasePage {
     }
 
     public void submitForm(By locator) {
-        waitForElementVisible(locator).submit();
+        waitForElementPresence(locator).submit();
     }
 
     public boolean isElementEnable(By locator) {
-        return waitForElementVisible(locator).isEnabled();
+        return waitForElementPresence(locator).isEnabled();
     }
 
     public boolean isElementDisplay(By locator) {
-        return waitForElementVisible(locator).isDisplayed();
+        return waitForElementPresence(locator).isDisplayed();
+    }
+
+    public boolean isElementSelected(By locator) {
+        return waitForElementPresence(locator).isSelected();
     }
 }
