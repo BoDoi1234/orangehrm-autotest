@@ -4,12 +4,16 @@ import demo.orangehrm.pages.LoginPage;
 import demo.orangehrm.pages.TopHeader;
 import demo.orangehrm.utils.DriverUtils;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestLogin {
+    private static final Logger log = LoggerFactory.getLogger(TestLogin.class);
     private LoginPage loginPage;
     private DriverUtils driverUtils;
     private WebDriver driver;
@@ -41,7 +45,7 @@ public class TestLogin {
     }
 
     @Test
-    void loginSuccessfullyUsingForm() {
+    void testLoginSuccessfullyUsingForm() {
         // Login account
         loginPage.inputUsername("Admin");
         loginPage.inputPassword("admin123");
@@ -75,5 +79,23 @@ public class TestLogin {
 
         String usernameAttributeName = loginPage.getAttributeNameOfUsername();
         Assert.assertEquals(usernameAttributeName, "username");
+    }
+
+    @DataProvider(name = "invalidLoginData")
+    public Object[][] getInvalidLoginData() {
+        return new Object[][] {
+                {"Admin", "admin"}, // Wrong password
+                {"Admin123", "admin123"}, // Wrong username
+                {"Admin123", "admin"}, // Wrong password and username
+        };
+    }
+
+    @Test(dataProvider = "invalidLoginData")
+    void testLoginFailCase(String username, String password) {
+        loginPage.inputUsername(username);
+        loginPage.inputPassword(password);
+        loginPage.clickLoginButton();
+
+        Assert.assertEquals(loginPage.getMessageError(), "Invalid credentials");
     }
 }

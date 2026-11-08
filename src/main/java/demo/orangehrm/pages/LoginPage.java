@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
     private final Logger logger = LogManager.getLogger(LoginPage.class);
+    private final By loginErrorContent = By.xpath("//*[contains(@class, 'login-form')]//*[contains(@class, 'content--error')]");
     private final By usernameTextBox = By.name("username");
     private final By passwordTextBox = By.name("password");
     private final By loginButton = By.cssSelector("button[class*='login-button']");
@@ -40,6 +41,12 @@ public class LoginPage extends BasePage {
         boolean isEnabled = isElementEnabled(loginButton);
         logger.info("Login button {} enabled\n", isEnabled ? "is" : "is not");
         return isEnabled;
+    }
+
+    public String getMessageError() {
+        String messageError = getText(loginErrorContent);
+        logger.info("Message error is: {}\n", messageError);
+        return messageError;
     }
 
     public String getBackgroundColorOfLoginButton() {
