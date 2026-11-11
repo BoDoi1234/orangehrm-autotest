@@ -3,14 +3,12 @@ package demo.orangehrm;
 import demo.orangehrm.pages.LoginPage;
 import demo.orangehrm.pages.TopHeader;
 import demo.orangehrm.utils.DriverUtils;
+import demo.orangehrm.utils.TestDataHelper;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class TestLogin {
     private static final Logger log = LoggerFactory.getLogger(TestLogin.class);
@@ -19,14 +17,16 @@ public class TestLogin {
     private WebDriver driver;
 
     @BeforeMethod
-    void setUp() {
+    void prepareTestCondition() {
         // Init browser
         driverUtils = new DriverUtils();
         driver = driverUtils.initBrowser();
 
         // Open login url
         loginPage = new LoginPage(driver);
-        loginPage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        String url = TestDataHelper.getDataOf("orange_url");
+//        loginPage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        loginPage.openUrl(url);
     }
 
     @AfterMethod
@@ -37,8 +37,8 @@ public class TestLogin {
     @Test
     void testLoginSuccessfully() {
         // Login account
-        loginPage.inputUsername("Admin");
-        loginPage.inputPassword("admin123");
+        loginPage.inputUsername(TestDataHelper.getDataOf("admin_username"));
+        loginPage.inputPassword(TestDataHelper.getDataOf("admin_password"));
         loginPage.clickLoginButton();
 
         verifyDashboardLoaded();
