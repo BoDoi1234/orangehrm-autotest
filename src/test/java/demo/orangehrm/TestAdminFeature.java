@@ -11,14 +11,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestAdminFeature {
-    private AdminPage adminPage;
-    private DriverUtils driverUtils;
+    private final DriverUtils driverUtils = new DriverUtils();
     private WebDriver driver;
+    private AdminPage adminPage;
 
     @BeforeMethod
     void setUp() {
         // Init browser
-        driverUtils = new DriverUtils();
         driver = driverUtils.initBrowser();
 
         // Open login url
