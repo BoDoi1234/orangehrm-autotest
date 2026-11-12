@@ -11,15 +11,13 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class TestLogin {
-    private static final Logger log = LoggerFactory.getLogger(TestLogin.class);
-    private LoginPage loginPage;
-    private DriverUtils driverUtils;
+    private final DriverUtils driverUtils = new DriverUtils();
     private WebDriver driver;
+    private LoginPage loginPage;
 
     @BeforeMethod
-    void prepareTestCondition() {
+    void setUp() {
         // Init browser
-        driverUtils = new DriverUtils();
         driver = driverUtils.initBrowser();
 
         // Open login url
