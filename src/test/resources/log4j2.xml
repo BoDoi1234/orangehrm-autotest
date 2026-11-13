@@ -5,11 +5,11 @@
 
     <Appenders>
         <Console name="CONSOLE">
-            <PatternLayout pattern="[%d] [%t] [%p] [%c] - %m%n"/>
+            <PatternLayout pattern="[%d] [%t] [%p] [%c] - %m%n" charset="UTF-8"/>
         </Console>
 
         <File name="MAIN" fileName="logs/main.log" append="false">
-            <PatternLayout pattern="[%d] [%t] [%p] [%c] - %m%n"/>
+            <PatternLayout pattern="[%d] [%t] [%p] [%c] - %m%n" charset="UTF-8"/>
         </File>
     </Appenders>
     <Loggers>
