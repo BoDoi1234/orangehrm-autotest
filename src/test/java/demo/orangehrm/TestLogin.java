@@ -30,6 +30,8 @@ public class TestLogin {
     @AfterMethod
     void tearDown() {
         driverUtils.quitBrowser(driver);
+        loginPage = null;
+        driver = null;
     }
 
     @Test
