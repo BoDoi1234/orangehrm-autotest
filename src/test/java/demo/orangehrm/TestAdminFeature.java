@@ -38,6 +38,8 @@ public class TestAdminFeature {
     void tearDown() {
         // Quit browser
         driverUtils.quitBrowser(driver);
+        adminPage = null;
+        driver = null;
     }
 
     @Test
