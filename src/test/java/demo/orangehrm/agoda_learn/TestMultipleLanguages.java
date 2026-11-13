@@ -32,6 +32,8 @@ public class TestMultipleLanguages {
     @AfterMethod(alwaysRun = true)
     void tearDown() {
         driverUtils.quitBrowser(driver);
+        agodaLandingPage = null;
+        driver = null;
     }
 
     @Test
