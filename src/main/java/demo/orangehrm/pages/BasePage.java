@@ -9,11 +9,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BasePage {
+public class BasePage extends Abstraction {
     private final Logger logger = LogManager.getLogger(BasePage.class);
     protected final WebDriver driver;
     protected final WebDriverWait wait;
+    public final static String testedLanguage = System.getProperty("language", "english");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -37,12 +40,27 @@ public class BasePage {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
+    public List<WebElement> waitForAllElementsVisibility(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+    }
+
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
     public String getText(By locator) {
         return waitForElementVisibility(locator).getText();
+    }
+
+    public List<String> getTextList(By locator) {
+        List<WebElement> tabList = waitForAllElementsVisibility(locator);
+        List<String> result = new ArrayList<>();
+
+        for (WebElement webElement : tabList) {
+            result.add(webElement.getText());
+        }
+
+        return result;
     }
 
     public String getCssValueOf(By locator, String propertyName) {
