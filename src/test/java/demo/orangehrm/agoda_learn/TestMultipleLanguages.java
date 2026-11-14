@@ -44,7 +44,7 @@ public class TestMultipleLanguages {
         Assert.assertEquals(actualWelcomeMsg.toUpperCase(), designWelcomeMessage);
 
         // Verify Tab List
-        List<String> actualTabList = agodaLandingPage.getTabListName();
+        List<String> actualTabList = agodaLandingPage.getAllTabName();
         List<String> expectedTabList = List.of(TestDataHelper.getDataOf("agoda_landing_page_tab_name_list").split(", "));
         Assert.assertEquals(actualTabList, expectedTabList);
     }
