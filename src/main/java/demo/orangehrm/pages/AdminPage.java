@@ -1,30 +1,40 @@
 package demo.orangehrm.pages;
 
+import demo.orangehrm.pages.layout.BaseLayoutPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.pagefactory.ByChained;
 
-public class AdminPage extends BasePage {
+public class AdminPage extends BaseLayoutPage {
     private final Logger logger = LogManager.getLogger(AdminPage.class);
-    private final By firstRecordCheckbox = By.xpath("//*[contains(@class, 'table-body')]/*[2]//input[contains(@type, 'checkbox')]");
+    private static final String RECORD_CHECKBOX_XPATH = "//*[contains(@class, 'table-body')]/*[%s]//input[contains(@type, 'checkbox')]";
 
     public AdminPage(WebDriver driver) {
         super(driver);
     }
 
+    private boolean isRecordCheckboxChecked(String index) {
+        By recordCheckbox = getDynamicXpath(RECORD_CHECKBOX_XPATH, index);
+        return isElementSelected(recordCheckbox);
+    }
+
+    private void clickRecordCheckbox(String index) {
+        By checkboxLocator = new ByChained(
+                getDynamicXpath(RECORD_CHECKBOX_XPATH, index), By.xpath(".//parent::*")
+        );
+        click(checkboxLocator);
+    }
+
     public boolean isFirstRecordCheckboxChecked() {
-        boolean isSelected = isElementSelected(firstRecordCheckbox);
+        boolean isSelected = isRecordCheckboxChecked("1");
         logger.info("First Record checkbox {} checked\n", isSelected ? "is" : "is not");
         return isSelected;
     }
 
     public void clickFirstRecordCheckbox() {
-        By checkboxLocator = new ByChained(
-                firstRecordCheckbox, By.xpath(".//parent::*")
-        );
-        click(checkboxLocator);
+        clickRecordCheckbox("1");
         logger.info("Selected checkbox of First Record\n");
     }
 }
