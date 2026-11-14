@@ -2,7 +2,7 @@ package demo.orangehrm;
 
 import demo.orangehrm.pages.AdminPage;
 import demo.orangehrm.pages.LoginPage;
-import demo.orangehrm.pages.NavigationPanel;
+import demo.orangehrm.pages.layout.NavigationPanel;
 import demo.orangehrm.utils.DriverUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
