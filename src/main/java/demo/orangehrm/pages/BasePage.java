@@ -16,11 +16,15 @@ public class BasePage extends Abstraction {
     private final Logger logger = LogManager.getLogger(BasePage.class);
     protected final WebDriver driver;
     protected final WebDriverWait wait;
-    public final static String testedLanguage = System.getProperty("language", "english");
+    public static final String testedLanguage = System.getProperty("language", "english");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    protected By getDynamicXpath(String xpathTemplate, String... values) {
+        return By.xpath(String.format(xpathTemplate, (Object[]) values));
     }
 
     public void openUrl(String url) {
@@ -69,6 +73,10 @@ public class BasePage extends Abstraction {
 
     public String getAttribute(By locator, String attributeName) {
         return waitForElementPresence(locator).getAttribute(attributeName);
+    }
+
+    public void clickBackButtonOfBrowser() {
+        driver.navigate().back();
     }
 
     public void sendKeys(By locator, String text) {
