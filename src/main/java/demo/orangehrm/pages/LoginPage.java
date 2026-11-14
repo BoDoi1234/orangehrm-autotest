@@ -27,14 +27,16 @@ public class LoginPage extends BasePage {
         logger.info("Type {} in password textbox", password);
     }
 
-    public void clickLoginButton() {
+    public DashboardPage clickLoginButton() {
         click(loginButton);
-        logger.info("Click login button\n");
+        logger.info("Click login button -> Navigate to Dashboard Page\n");
+        return new DashboardPage(driver);
     }
 
-    public void submitFormLogin() {
+    public DashboardPage submitFormLogin() {
         submitForm(loginForm);
-        logger.info("Submit form login\n");
+        logger.info("Submit form login -> Navigate to Dashboard Page\n");
+        return new DashboardPage(driver);
     }
 
     public boolean checkLoginButtonIsEnabled() {
