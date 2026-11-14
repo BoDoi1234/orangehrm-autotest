@@ -12,7 +12,7 @@ import java.util.List;
 public class AgodaLandingPage extends BasePage {
     private final Logger logger = LogManager.getLogger(AgodaLandingPage.class);
     private final By welcomeMsg = By.cssSelector("h1");
-    private final By tabNameList = By.xpath("//div[@role='tablist']/div//p");
+    private final By tabList = By.xpath("//div[@role='tablist']/div//p");
     private final By closeDownloadButton = By.xpath("//button[contains(@data-element-name, \"app-download\")]");
 
     public AgodaLandingPage(WebDriver driver) {
@@ -34,10 +34,10 @@ public class AgodaLandingPage extends BasePage {
         return welcomeMessage;
     }
 
-    public List<String> getTabListName() {
-        List<String> tabListName = getTextList(tabNameList);
-        logger.info("Tab list name = {}\n", tabListName);
-        return tabListName;
+    public List<String> getAllTabName() {
+        List<String> tabNameList = getTextList(tabList);
+        logger.info("Tab name list = {}\n", tabNameList);
+        return tabNameList;
     }
 
     /**

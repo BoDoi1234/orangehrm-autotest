@@ -8,8 +8,8 @@ import org.openqa.selenium.WebDriver;
 
 public class AgodaUserMenu extends BasePage {
     private final Logger logger = LogManager.getLogger(AgodaLandingPage.class);
-    protected final static By changeLanguageButton = By.xpath("//button[contains(@aria-describedby,'language')]");
-    protected final static By selectedLanguageText = By.xpath("//button[contains(@aria-describedby,'language')]/span");
+    protected static final By changeLanguageButton = By.xpath("//button[contains(@aria-describedby,'language')]");
+    protected static final By selectedLanguageText = By.xpath("//button[contains(@aria-describedby,'language')]/span");
 
     public AgodaUserMenu(WebDriver driver) {
         super(driver);
