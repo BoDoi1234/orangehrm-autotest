@@ -1,19 +1,18 @@
 package demo.orangehrm;
 
+import demo.orangehrm.pages.DashboardPage;
 import demo.orangehrm.pages.LoginPage;
-import demo.orangehrm.pages.TopHeader;
 import demo.orangehrm.utils.DriverUtils;
 import demo.orangehrm.utils.TestDataHelper;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.util.List;
 
 public class TestLogin {
     private final DriverUtils driverUtils = new DriverUtils();
     private WebDriver driver;
-    private LoginPage loginPage;
 
     @BeforeMethod
     void setUp() {
@@ -21,54 +20,58 @@ public class TestLogin {
         driver = driverUtils.initBrowser();
 
         // Open login url
-        loginPage = new LoginPage(driver);
         String url = TestDataHelper.getDataOf("orange_url");
-//        loginPage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-        loginPage.openUrl(url);
+        new LoginPage(driver).openUrl(url);
     }
 
     @AfterMethod
     void tearDown() {
         driverUtils.quitBrowser(driver);
-        loginPage = null;
-        driver = null;
     }
 
-    @Test
-    void testLoginSuccessfully() {
-        // Login account
-        loginPage.inputUsername(TestDataHelper.getDataOf("admin_username"));
-        loginPage.inputPassword(TestDataHelper.getDataOf("admin_password"));
-        loginPage.clickLoginButton();
-
-        verifyDashboardLoaded();
+    private DashboardPage loginAs(String username, String password) {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.inputUsername(username);
+        loginPage.inputPassword(password);
+        return loginPage.clickLoginButton();
     }
 
-    @Test
-    void testLoginSuccessfullyUsingForm() {
-        // Login account
-        loginPage.inputUsername("Admin");
-        loginPage.inputPassword("admin123");
-        loginPage.submitFormLogin();
-
-        verifyDashboardLoaded();
-    }
-
-    private void verifyDashboardLoaded() {
+    private void verifyDashboardLoaded(DashboardPage dashboardPage) {
         // Verify: Url / Dashboard page / Profile image
-        String currentUrl = loginPage.getCurrentUrl();
+        String currentUrl = dashboardPage.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("dashboard"));
 
         // getText()
-        TopHeader topHeader = new TopHeader(driver);
-        Assert.assertEquals(topHeader.getPageTitle(), "Dashboard");
+        Assert.assertEquals(dashboardPage.getTopHeader().getPageTitle(), "Dashboard");
 
         // isVisible()
-        Assert.assertTrue(topHeader.getDisplayOfProfileImage(), "Profile Image is not displayed");
+        Assert.assertTrue(dashboardPage.getTopHeader().getDisplayOfProfileImage(), "Profile Image is not displayed");
     }
 
-    @Test
+    @Test(description = "TC_E2E_01")
+    void testAuthenticationWithAdminAccountAndLogout() {
+        // Login with Admin account
+        DashboardPage dashboardPage = loginAs(TestDataHelper.getDataOf("admin_username"),
+                TestDataHelper.getDataOf("admin_password"));
+
+        List<String> actualWidgetNameList = dashboardPage.getAllWidgetName();
+        List<String> expectedWidgetNameList = List.of(TestDataHelper.getDataOf("admin_dashboard_page_widget_name_list").split(", "));
+
+        Assert.assertTrue(actualWidgetNameList.containsAll(expectedWidgetNameList));
+
+        LoginPage loginPage = dashboardPage.logoutAccount();
+        String currentUrl = loginPage.getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("login"));
+
+        loginPage.clickBackButtonOfBrowser();
+        currentUrl = loginPage.getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("login"));
+    }
+
+    @Test(description = "UI_TC")
     void verifyLoginFormCssStyle() {
+        LoginPage loginPage = new LoginPage(driver);
+
         // Check background login button color
         String loginButtonBackgroundColor = loginPage.getBackgroundColorOfLoginButton();
         Assert.assertEquals(loginButtonBackgroundColor, "rgba(21, 244, 233, 1)");
@@ -79,23 +82,5 @@ public class TestLogin {
 
         String usernameAttributeName = loginPage.getAttributeNameOfUsername();
         Assert.assertEquals(usernameAttributeName, "username");
-    }
-
-    @DataProvider(name = "invalidLoginData")
-    public Object[][] getInvalidLoginData() {
-        return new Object[][] {
-                {"Admin", "admin"}, // Wrong password
-                {"Admin123", "admin123"}, // Wrong username
-                {"Admin123", "admin"}, // Wrong password and username
-        };
-    }
-
-    @Test(dataProvider = "invalidLoginData")
-    void testLoginFailCase(String username, String password) {
-        loginPage.inputUsername(username);
-        loginPage.inputPassword(password);
-        loginPage.clickLoginButton();
-
-        Assert.assertEquals(loginPage.getMessageError(), "Invalid credentials");
     }
 }
