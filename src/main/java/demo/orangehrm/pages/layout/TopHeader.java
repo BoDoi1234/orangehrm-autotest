@@ -1,5 +1,6 @@
-package demo.orangehrm.pages;
+package demo.orangehrm.pages.layout;
 
+import demo.orangehrm.pages.BasePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -9,6 +10,7 @@ public class TopHeader extends BasePage {
     private final Logger logger = LogManager.getLogger(TopHeader.class);
     private final By pageTitleHeading = By.cssSelector("span[class*='topbar-header-breadcrumb']");
     private final By profileImage = By.cssSelector("img[class*='userdropdown-img']");
+    private final By userDropdown = By.xpath("//header[contains(@class, 'topbar')]//li[contains(@class, 'userdropdown')]");
 
     public TopHeader(WebDriver driver) {
         super(driver);
@@ -24,5 +26,11 @@ public class TopHeader extends BasePage {
         boolean isDisplayed = isElementDisplayed(profileImage);
         logger.info("Profile Image {} display\n", isDisplayed ? "is" : "is not");
         return isDisplayed;
+    }
+
+    public UserMenu clickUserDropdown() {
+        click(userDropdown);
+        logger.info("Click User Dropdown Menu\n");
+        return new UserMenu(driver);
     }
 }
