@@ -1,7 +1,8 @@
-package demo.orangehrm.pages.layout;
+package demo.orangehrm.pages.components;
 
-import demo.orangehrm.pages.AdminPage;
+import demo.orangehrm.pages.admin.AdminPage;
 import demo.orangehrm.pages.BasePage;
+import demo.orangehrm.pages.leave.LeavePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -24,5 +25,11 @@ public class NavigationPanel extends BasePage {
         clickMenuByModule("viewAdminModule");
         logger.info("Navigate to Admin Page\n");
         return new AdminPage(driver);
+    }
+
+    public LeavePage clickLeaveMenu() {
+        clickMenuByModule("viewLeaveModule");
+        logger.info("Navigate to Leave Page\n");
+        return new LeavePage(driver);
     }
 }

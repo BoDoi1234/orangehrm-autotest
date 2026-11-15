@@ -1,4 +1,4 @@
-package demo.orangehrm.pages.layout;
+package demo.orangehrm.pages.components;
 
 import demo.orangehrm.pages.BasePage;
 import demo.orangehrm.pages.authentication.LoginPage;

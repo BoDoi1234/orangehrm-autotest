@@ -1,4 +1,4 @@
-package demo.orangehrm.pages.layout;
+package demo.orangehrm.pages.components;
 
 import demo.orangehrm.pages.BasePage;
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +11,7 @@ public class TopHeader extends BasePage {
     private final By pageTitleHeading = By.cssSelector("span[class*='topbar-header-breadcrumb']");
     private final By profileImage = By.cssSelector("img[class*='userdropdown-img']");
     private final By userDropdown = By.xpath("//header[contains(@class, 'topbar')]//li[contains(@class, 'userdropdown')]");
+    private static final String TOPBAR_NAVIGATION_BUTTON_XPATH = "//*[contains(@class, 'topbar-body')]/nav[@role='navigation']//a[text()='%s']";
 
     public TopHeader(WebDriver driver) {
         super(driver);
@@ -20,6 +21,12 @@ public class TopHeader extends BasePage {
         String pageTitle = getText(pageTitleHeading);
         logger.info("Title of this Page is {}\n", pageTitle);
         return pageTitle;
+    }
+
+    public void clickNavigationButton(String buttonName) {
+        By buttonLocator = getDynamicXpath(TOPBAR_NAVIGATION_BUTTON_XPATH, buttonName);
+        logger.info("Navigate to {}\n", buttonName);
+        click(buttonLocator);
     }
 
     public boolean getDisplayOfProfileImage() {
