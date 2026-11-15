@@ -1,7 +1,7 @@
 package demo.orangehrm.pages.layout;
 
 import demo.orangehrm.pages.BasePage;
-import demo.orangehrm.pages.LoginPage;
+import demo.orangehrm.pages.authentication.LoginPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
