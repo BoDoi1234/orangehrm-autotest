@@ -1,5 +1,6 @@
 package demo.orangehrm.pages;
 
+import demo.orangehrm.pages.authentication.LoginPage;
 import demo.orangehrm.pages.layout.NavigationPanel;
 import demo.orangehrm.pages.layout.TopHeader;
 import demo.orangehrm.pages.layout.UserMenu;
