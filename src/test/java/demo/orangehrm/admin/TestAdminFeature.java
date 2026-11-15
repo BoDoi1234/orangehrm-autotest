@@ -1,9 +1,10 @@
-package demo.orangehrm;
+package demo.orangehrm.admin;
 
-import demo.orangehrm.pages.AdminPage;
-import demo.orangehrm.pages.LoginPage;
-import demo.orangehrm.pages.layout.NavigationPanel;
+import demo.orangehrm.pages.admin.AdminPage;
+import demo.orangehrm.pages.dashboard.DashboardPage;
+import demo.orangehrm.pages.authentication.LoginPage;
 import demo.orangehrm.utils.DriverUtils;
+import demo.orangehrm.utils.TestDataHelper;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -13,7 +14,6 @@ import org.testng.annotations.Test;
 public class TestAdminFeature {
     private final DriverUtils driverUtils = new DriverUtils();
     private WebDriver driver;
-    private AdminPage adminPage;
 
     @BeforeMethod
     void setUp() {
@@ -21,29 +21,34 @@ public class TestAdminFeature {
         driver = driverUtils.initBrowser();
 
         // Open login url
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.openUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-
-        // Login account
-        loginPage.inputUsername("Admin");
-        loginPage.inputPassword("admin123");
-        loginPage.clickLoginButton();
-
-        // Open Admin Page
-        NavigationPanel navigationPanel = new NavigationPanel(driver);
-        adminPage = navigationPanel.clickAdminMenu();
+        String url = TestDataHelper.getDataOf("orange_url");
+        new LoginPage(driver).openUrl(url);
     }
 
     @AfterMethod
     void tearDown() {
         // Quit browser
         driverUtils.quitBrowser(driver);
-        adminPage = null;
-        driver = null;
+    }
+
+    // Login account
+    private DashboardPage loginAs(String username, String password) {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.inputUsername(username);
+        loginPage.inputPassword(password);
+
+        return loginPage.clickLoginButton();
     }
 
     @Test
     void testRecordCheckboxBehavior() {
+        // Login as Admin User
+        DashboardPage dashboardPage = loginAs(TestDataHelper.getDataOf("admin_username"),
+                TestDataHelper.getDataOf("admin_password"));
+
+        // Navigate to Admin Page
+        AdminPage adminPage = dashboardPage.getNavigationPanel().clickAdminMenu();
+
         boolean firstRecordCheckboxIsChecked = adminPage.isFirstRecordCheckboxChecked();
         Assert.assertFalse(firstRecordCheckboxIsChecked, "Default status of 1st record checkbox is checked");
 

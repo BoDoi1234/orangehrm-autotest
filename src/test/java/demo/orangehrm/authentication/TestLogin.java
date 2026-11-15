@@ -1,7 +1,7 @@
-package demo.orangehrm;
+package demo.orangehrm.authentication;
 
-import demo.orangehrm.pages.DashboardPage;
-import demo.orangehrm.pages.LoginPage;
+import demo.orangehrm.pages.dashboard.DashboardPage;
+import demo.orangehrm.pages.authentication.LoginPage;
 import demo.orangehrm.utils.DriverUtils;
 import demo.orangehrm.utils.TestDataHelper;
 import org.openqa.selenium.WebDriver;
@@ -48,7 +48,7 @@ public class TestLogin {
         Assert.assertTrue(dashboardPage.getTopHeader().getDisplayOfProfileImage(), "Profile Image is not displayed");
     }
 
-    @Test(description = "TC_E2E_01")
+    @Test(description = "Admin Login, Dashboard Widget Verification, and Logout")
     void testAuthenticationWithAdminAccountAndLogout() {
         // Login with Admin account
         DashboardPage dashboardPage = loginAs(TestDataHelper.getDataOf("admin_username"),

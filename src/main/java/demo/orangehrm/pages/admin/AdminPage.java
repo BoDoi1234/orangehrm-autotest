@@ -1,6 +1,6 @@
-package demo.orangehrm.pages;
+package demo.orangehrm.pages.admin;
 
-import demo.orangehrm.pages.layout.BaseLayoutPage;
+import demo.orangehrm.pages.BaseLayoutPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -15,12 +15,12 @@ public class AdminPage extends BaseLayoutPage {
         super(driver);
     }
 
-    private boolean isRecordCheckboxChecked(String index) {
+    public boolean isRecordCheckboxChecked(String index) {
         By recordCheckbox = getDynamicXpath(RECORD_CHECKBOX_XPATH, index);
         return isElementSelected(recordCheckbox);
     }
 
-    private void clickRecordCheckbox(String index) {
+    public void clickRecordCheckbox(String index) {
         By checkboxLocator = new ByChained(
                 getDynamicXpath(RECORD_CHECKBOX_XPATH, index), By.xpath(".//parent::*")
         );
@@ -28,13 +28,13 @@ public class AdminPage extends BaseLayoutPage {
     }
 
     public boolean isFirstRecordCheckboxChecked() {
-        boolean isSelected = isRecordCheckboxChecked("1");
+        boolean isSelected = isRecordCheckboxChecked("2");
         logger.info("First Record checkbox {} checked\n", isSelected ? "is" : "is not");
         return isSelected;
     }
 
     public void clickFirstRecordCheckbox() {
-        clickRecordCheckbox("1");
+        clickRecordCheckbox("2");
         logger.info("Selected checkbox of First Record\n");
     }
 }
