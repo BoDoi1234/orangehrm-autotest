@@ -1,7 +1,8 @@
-package demo.orangehrm.pages.layout;
+package demo.orangehrm.pages;
 
-import demo.orangehrm.pages.BasePage;
-import demo.orangehrm.pages.LoginPage;
+import demo.orangehrm.pages.layout.NavigationPanel;
+import demo.orangehrm.pages.layout.TopHeader;
+import demo.orangehrm.pages.layout.UserMenu;
 import org.openqa.selenium.WebDriver;
 
 public class BaseLayoutPage extends BasePage {
