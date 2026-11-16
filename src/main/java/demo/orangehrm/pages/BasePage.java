@@ -48,11 +48,22 @@ public class BasePage extends Abstraction {
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
+    public void waitForElementStaleness(WebElement element) {
+        wait.until(ExpectedConditions.stalenessOf(element));
+    }
+
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
     public String getText(By locator) {
+        return waitForElementVisibility(locator).getText();
+    }
+
+    public String getTextAfterChange(By locator) {
+        WebElement element = waitForElementVisibility(locator);
+        waitForElementStaleness(element);
+
         return waitForElementVisibility(locator).getText();
     }
 
