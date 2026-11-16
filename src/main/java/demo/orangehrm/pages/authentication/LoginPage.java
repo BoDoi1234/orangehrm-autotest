@@ -20,12 +20,12 @@ public class LoginPage extends BasePage {
     }
 
     public void inputUsername(String username) {
-        sendKeys(usernameTextBox, username);
+        inputTextInToTextBox(usernameTextBox, username);
         logger.info("Type {} in username textbox", username);
     }
 
     public void inputPassword(String password) {
-        sendKeys(passwordTextBox, password);
+        inputTextInToTextBox(passwordTextBox, password);
         logger.info("Type {} in password textbox", password);
     }
 

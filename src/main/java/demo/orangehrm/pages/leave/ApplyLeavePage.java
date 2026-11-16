@@ -22,7 +22,7 @@ public class ApplyLeavePage extends LeavePage {
 
     public String getLeaveBalanceTextAfterChange() {
         String leaveBalanceText = getTextAfterChange(leaveBalanceSelector);
-        logger.info("Leave Balance Text: {}", leaveBalanceText);
+        logger.info("Leave Balance Text After Change: {}", leaveBalanceText);
         return leaveBalanceText;
     }
 }

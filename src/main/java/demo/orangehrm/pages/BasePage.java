@@ -61,7 +61,7 @@ public class BasePage extends Abstraction {
     }
 
     public String getTextAfterChange(By locator) {
-        WebElement element = waitForElementVisibility(locator);
+        WebElement element = waitForElementPresence(locator);
         waitForElementStaleness(element);
 
         return waitForElementVisibility(locator).getText();
@@ -90,7 +90,7 @@ public class BasePage extends Abstraction {
         driver.navigate().back();
     }
 
-    public void sendKeys(By locator, String text) {
+    public void inputTextInToTextBox(By locator, String text) {
         WebElement element = waitForElementVisibility(locator);
         element.clear();
         element.sendKeys(text);
