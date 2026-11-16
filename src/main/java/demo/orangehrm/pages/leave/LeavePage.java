@@ -11,9 +11,9 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 public class LeavePage extends BaseLayoutPage {
     private final Logger logger = LogManager.getLogger(LeavePage.class);
     private static final String LABEL_XPATH = "//form//label[text()='%s']/parent::*/following-sibling::*";
-    private final By leaveTypeSelector = new ByChained(getLocatorByLabelXpath("Leave Type"), By.xpath("./*[contains(@class, 'select-wrapper')]"));
-    private final By fromDateSelector = new ByChained(getLocatorByLabelXpath("From Date"), By.xpath("./*[contains(@class, 'date-wrapper')]"));
-    private final By toDateSelector = new ByChained(getLocatorByLabelXpath("To Date"), By.xpath("./*[contains(@class, 'date-wrapper')]"));
+    private final By leaveTypeSelector = new ByChained(getLocatorByLabel("Leave Type"), By.xpath("./*[contains(@class, 'select-wrapper')]"));
+    private final By fromDateSelector = new ByChained(getLocatorByLabel("From Date"), By.xpath("./*[contains(@class, 'date-wrapper')]"));
+    private final By toDateSelector = new ByChained(getLocatorByLabel("To Date"), By.xpath("./*[contains(@class, 'date-wrapper')]"));
 
     public LeavePage(WebDriver driver) {
         super(driver);
@@ -25,7 +25,7 @@ public class LeavePage extends BaseLayoutPage {
         return new ApplyLeavePage(driver);
     }
 
-    protected By getLocatorByLabelXpath(String label) {
+    protected By getLocatorByLabel(String label) {
         return getDynamicXpath(LABEL_XPATH, label);
     }
 

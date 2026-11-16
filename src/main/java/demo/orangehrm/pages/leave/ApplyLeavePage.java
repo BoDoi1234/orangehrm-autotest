@@ -8,7 +8,7 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 
 public class ApplyLeavePage extends LeavePage {
     private final Logger logger = LogManager.getLogger(ApplyLeavePage.class);
-    private final By leaveBalanceSelector = new ByChained(getLocatorByLabelXpath("Leave Balance"), By.xpath("./p"));
+    private final By leaveBalanceSelector = new ByChained(getLocatorByLabel("Leave Balance"), By.xpath("./p"));
 
     public ApplyLeavePage(WebDriver driver) {
         super(driver);
