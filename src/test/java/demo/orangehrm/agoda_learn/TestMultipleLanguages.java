@@ -14,7 +14,6 @@ import java.util.List;
 public class TestMultipleLanguages {
     private final DriverUtils driverUtils = new DriverUtils();
     private WebDriver driver;
-    private AgodaLandingPage agodaLandingPage;
 
     @BeforeMethod
     void setUp() {
@@ -22,7 +21,7 @@ public class TestMultipleLanguages {
         driver = driverUtils.initBrowser();
 
         // Open url
-        agodaLandingPage = new AgodaLandingPage(driver);
+        AgodaLandingPage agodaLandingPage = new AgodaLandingPage(driver);
         agodaLandingPage.openUrl(TestDataHelper.getDataOf("agoda_url"));
 
         // Set test language
@@ -32,14 +31,14 @@ public class TestMultipleLanguages {
     @AfterMethod(alwaysRun = true)
     void tearDown() {
         driverUtils.quitBrowser(driver);
-        agodaLandingPage = null;
-        driver = null;
     }
 
     @Test
     void testLandingPageDisplay() {
+        AgodaLandingPage agodaLandingPage = new AgodaLandingPage(driver);
+
         // Verify Welcome Message
-        String actualWelcomeMsg = agodaLandingPage.getWelcomeMessage();
+        String actualWelcomeMsg = agodaLandingPage.getWelcomeMessageAfterChangeLanguage();
         String designWelcomeMessage = TestDataHelper.getDataOf("agoda_landing_page_welcome_message");
         Assert.assertEquals(actualWelcomeMsg.toUpperCase(), designWelcomeMessage);
 

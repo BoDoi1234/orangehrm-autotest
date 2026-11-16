@@ -34,6 +34,12 @@ public class AgodaLandingPage extends BasePage {
         return welcomeMessage;
     }
 
+    public String getWelcomeMessageAfterChangeLanguage() {
+        String welcomeMessage = getTextAfterChange(welcomeMsg);
+        logger.info("Welcome Message is after change language {}\n", welcomeMessage);
+        return welcomeMessage;
+    }
+
     public List<String> getAllTabName() {
         List<String> tabNameList = getTextList(tabList);
         logger.info("Tab name list = {}\n", tabNameList);
@@ -56,11 +62,6 @@ public class AgodaLandingPage extends BasePage {
             click(AgodaUserMenu.changeLanguageButton);
             By targetLanguageLocator = By.xpath(String.format("//p[text()='%s']", convertedLanguage));
             click(targetLanguageLocator);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         } else {
             click(AgodaHeader.userMenuButton);
             logger.info("Language is already {}\n", convertedLanguage);
