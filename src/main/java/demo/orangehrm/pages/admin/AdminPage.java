@@ -1,6 +1,6 @@
 package demo.orangehrm.pages.admin;
 
-import demo.orangehrm.pages.BaseLayoutPage;
+import demo.orangehrm.pages.layout.BaseLayoutPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
