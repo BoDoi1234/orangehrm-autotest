@@ -1,7 +1,7 @@
 package demo.orangehrm.pages.leave;
 
 import demo.orangehrm.pages.layout.BaseLayoutPage;
-import demo.orangehrm.pages.layout.Calendar;
+import demo.orangehrm.component.Calendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;

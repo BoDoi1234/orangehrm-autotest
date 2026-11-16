@@ -1,4 +1,4 @@
-package demo.orangehrm.pages.layout;
+package demo.orangehrm.component;
 
 import demo.orangehrm.pages.BasePage;
 import org.apache.logging.log4j.LogManager;
