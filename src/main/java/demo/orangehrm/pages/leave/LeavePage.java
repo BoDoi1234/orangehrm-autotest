@@ -1,6 +1,7 @@
 package demo.orangehrm.pages.leave;
 
 import demo.orangehrm.pages.layout.BaseLayoutPage;
+import demo.orangehrm.pages.layout.Calendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -41,13 +42,15 @@ public class LeavePage extends BaseLayoutPage {
         logger.info("Select Leave Type: {}\n", leaveType);
     }
 
-    public void clickFromDateSelector() {
+    public Calendar clickFromDateSelector() {
         click(fromDateSelector);
         logger.info("Click From Date Input\n");
+        return new Calendar(driver);
     }
 
-    public void clickToDateSelector() {
+    public Calendar clickToDateSelector() {
         click(toDateSelector);
         logger.info("Click To Date Input\n");
+        return new Calendar(driver);
     }
 }

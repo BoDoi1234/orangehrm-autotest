@@ -1,6 +1,7 @@
 package demo.orangehrm.leave;
 
 import demo.orangehrm.pages.dashboard.DashboardPage;
+import demo.orangehrm.pages.layout.Calendar;
 import demo.orangehrm.pages.leave.ApplyLeavePage;
 import demo.orangehrm.pages.leave.LeavePage;
 import demo.orangehrm.pages.authentication.LoginPage;
@@ -55,12 +56,12 @@ public class TestLeaveFeature {
         applyLeavePage.selectLeaveType("US - Vacation");
 
         // 4. Select From Date and To Date
-        applyLeavePage.clickFromDateSelector();
-        applyLeavePage.getCalendar().selectDay("16");
+        Calendar calendar = applyLeavePage.clickFromDateSelector();
+        calendar.selectDay("16");
 
-        applyLeavePage.clickToDateSelector();
-        applyLeavePage.getCalendar().nextMonth();
-        applyLeavePage.getCalendar().selectDay("4");
+        calendar = applyLeavePage.clickToDateSelector();
+        calendar.nextMonth();
+        calendar.selectDay("4");
 
         // 5.Observe balance error and attempt submit
         String leaveBalanceText = applyLeavePage.getLeaveBalanceTextAfterChange();
