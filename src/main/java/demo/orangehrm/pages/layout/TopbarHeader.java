@@ -6,14 +6,13 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class TopHeader extends BasePage {
-    private final Logger logger = LogManager.getLogger(TopHeader.class);
+public class TopbarHeader extends BasePage {
+    private final Logger logger = LogManager.getLogger(TopbarHeader.class);
     private final By pageTitleHeading = By.cssSelector("span[class*='topbar-header-breadcrumb']");
     private final By profileImage = By.cssSelector("img[class*='userdropdown-img']");
     private final By userDropdown = By.xpath("//header[contains(@class, 'topbar')]//li[contains(@class, 'userdropdown')]");
-    private static final String TOPBAR_NAVIGATION_BUTTON_XPATH = "//*[contains(@class, 'topbar-body')]/nav[@role='navigation']//a[text()='%s']";
 
-    public TopHeader(WebDriver driver) {
+    public TopbarHeader(WebDriver driver) {
         super(driver);
     }
 
@@ -21,12 +20,6 @@ public class TopHeader extends BasePage {
         String pageTitle = getText(pageTitleHeading);
         logger.info("Title of this Page is {}\n", pageTitle);
         return pageTitle;
-    }
-
-    public void clickNavigationButton(String buttonName) {
-        By buttonLocator = getDynamicXpath(TOPBAR_NAVIGATION_BUTTON_XPATH, buttonName);
-        logger.info("Navigate to {}\n", buttonName);
-        click(buttonLocator);
     }
 
     public boolean getDisplayOfProfileImage() {
