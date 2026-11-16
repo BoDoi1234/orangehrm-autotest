@@ -42,7 +42,7 @@ public class TestLeaveFeature {
         return loginPage.clickLoginButton();
     }
 
-    @Test
+    @Test(description = "Apply for Leave Exceeding Balance & Verify Insufficient Balance Handling")
     void testApplyLeaveExceedingBalance() {
         // 1. Login as ESS User
         DashboardPage dashboardPage = loginAs(TestDataHelper.getDataOf("ess_username"),
@@ -56,10 +56,10 @@ public class TestLeaveFeature {
         applyLeavePage.selectLeaveType("US - Vacation");
 
         // 4. Select From Date and To Date
-        Calendar calendar = applyLeavePage.clickFromDateSelector();
+        Calendar calendar = applyLeavePage.clickFromDateSelector(); // From Date
         calendar.selectDay("16");
 
-        calendar = applyLeavePage.clickToDateSelector();
+        calendar = applyLeavePage.clickToDateSelector(); // To Date
         calendar.nextMonth();
         calendar.selectDay("4");
 
