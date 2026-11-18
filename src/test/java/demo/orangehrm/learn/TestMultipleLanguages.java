@@ -1,4 +1,4 @@
-package demo.orangehrm.agoda_learn;
+package demo.orangehrm.learn;
 
 import demo.orangehrm.pages.BasePage;
 import demo.orangehrm.utils.DriverUtils;
