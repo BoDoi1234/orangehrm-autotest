@@ -31,19 +31,12 @@ public class TestAdminFeature {
         driverUtils.quitBrowser(driver);
     }
 
-    // Login account
-    private DashboardPage loginAs(String username, String password) {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.inputUsername(username);
-        loginPage.inputPassword(password);
-
-        return loginPage.clickLoginButton();
-    }
-
     @Test
     void testRecordCheckboxBehavior() {
+        LoginPage loginPage = new LoginPage(driver);
+
         // Login as Admin User
-        DashboardPage dashboardPage = loginAs(TestDataHelper.getDataOf("admin_username"),
+        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataOf("admin_username"),
                 TestDataHelper.getDataOf("admin_password"));
 
         // Navigate to Admin Page

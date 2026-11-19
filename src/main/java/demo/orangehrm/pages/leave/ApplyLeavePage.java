@@ -21,7 +21,8 @@ public class ApplyLeavePage extends LeavePage {
     }
 
     public String getLeaveBalanceTextAfterChange() {
-        String leaveBalanceText = getTextAfterChange(leaveBalanceSelector);
+        String oldLeaveBalanceText = getText(leaveBalanceSelector);
+        String leaveBalanceText = getTextWhenChangeForm(leaveBalanceSelector, oldLeaveBalanceText);
         logger.info("Leave Balance Text After Change: {}", leaveBalanceText);
         return leaveBalanceText;
     }

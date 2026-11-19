@@ -19,26 +19,44 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public void inputUsername(String username) {
+    private void inputUsername(String username) {
         inputTextInToTextBox(usernameTextBox, username);
         logger.info("Type {} in username textbox", username);
     }
 
-    public void inputPassword(String password) {
+    private void inputPassword(String password) {
         inputTextInToTextBox(passwordTextBox, password);
         logger.info("Type {} in password textbox", password);
     }
 
-    public DashboardPage clickLoginButton() {
+    private void clickLoginButton() {
         click(loginButton);
-        logger.info("Click login button -> Navigate to Dashboard Page\n");
+        logger.info("Click login button\n");
+    }
+
+    private void submitFormLogin() {
+        submitForm(loginForm);
+        logger.info("Submit form login\n");
+    }
+
+    private void performLogin(String username, String password) {
+        inputUsername(username);
+        inputPassword(password);
+        clickLoginButton();
+    }
+
+    public DashboardPage loginWithValidCredentials(String username, String password) {
+        performLogin(username, password);
+        waitForUrlContains("dashboard");
+        logger.info("Login successful -> Navigate to Dashboard Page\n");
         return new DashboardPage(driver);
     }
 
-    public DashboardPage submitFormLogin() {
-        submitForm(loginForm);
-        logger.info("Submit form login -> Navigate to Dashboard Page\n");
-        return new DashboardPage(driver);
+    public LoginPage loginWithInvalidCredentials(String username, String password) {
+        performLogin(username, password);
+        waitForElementVisibility(loginErrorContent);
+        logger.info("Login failed -> Stay on Login Page\n");
+        return this;
     }
 
     public boolean checkLoginButtonIsEnabled() {

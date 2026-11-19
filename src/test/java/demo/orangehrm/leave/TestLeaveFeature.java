@@ -34,18 +34,12 @@ public class TestLeaveFeature {
         driverUtils.quitBrowser(driver);
     }
 
-    private DashboardPage loginAs(String username, String password) {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.inputUsername(username);
-        loginPage.inputPassword(password);
-
-        return loginPage.clickLoginButton();
-    }
-
     @Test(description = "Apply for Leave Exceeding Balance & Verify Insufficient Balance Handling")
     void testApplyLeaveExceedingBalance() {
+        LoginPage loginPage = new LoginPage(driver);
+
         // 1. Login as ESS User
-        DashboardPage dashboardPage = loginAs(TestDataHelper.getDataOf("ess_username"),
+        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataOf("ess_username"),
                 TestDataHelper.getDataOf("ess_password"));
 
         // 2. Navigate to Leave Page > Apply

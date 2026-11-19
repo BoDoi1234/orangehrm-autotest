@@ -35,7 +35,8 @@ public class AgodaLandingPage extends BasePage {
     }
 
     public String getWelcomeMessageAfterChangeLanguage() {
-        String welcomeMessage = getTextAfterChange(welcomeMsg);
+        String oldWelcomeMessage = getText(welcomeMsg);
+        String welcomeMessage = getTextWhenChangeForm(welcomeMsg, oldWelcomeMessage);
         logger.info("Welcome Message is after change language {}\n", welcomeMessage);
         return welcomeMessage;
     }

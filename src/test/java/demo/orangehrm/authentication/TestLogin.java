@@ -29,13 +29,6 @@ public class TestLogin {
         driverUtils.quitBrowser(driver);
     }
 
-    private DashboardPage loginAs(String username, String password) {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.inputUsername(username);
-        loginPage.inputPassword(password);
-        return loginPage.clickLoginButton();
-    }
-
     private void verifyDashboardLoaded(DashboardPage dashboardPage) {
         // Verify: Url / Dashboard page / Profile image
         String currentUrl = dashboardPage.getCurrentUrl();
@@ -50,8 +43,10 @@ public class TestLogin {
 
     @Test(description = "Admin Login, Dashboard Widget Verification, and Logout")
     void testAuthenticationWithAdminAccountAndLogout() {
+        LoginPage loginPage = new LoginPage(driver);
+
         // Login with Admin account
-        DashboardPage dashboardPage = loginAs(TestDataHelper.getDataOf("admin_username"),
+        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataOf("admin_username"),
                 TestDataHelper.getDataOf("admin_password"));
 
         List<String> actualWidgetNameList = dashboardPage.getAllWidgetName();
@@ -59,7 +54,7 @@ public class TestLogin {
 
         Assert.assertTrue(actualWidgetNameList.containsAll(expectedWidgetNameList));
 
-        LoginPage loginPage = dashboardPage.logoutAccount();
+        loginPage = dashboardPage.logoutAccount();
         String currentUrl = loginPage.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("login"));
 

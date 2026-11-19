@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class BasePage extends Abstraction {
     private final Logger logger = LogManager.getLogger(BasePage.class);
@@ -23,13 +24,26 @@ public class BasePage extends Abstraction {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    protected By getDynamicXpath(String xpathTemplate, String... values) {
-        return By.xpath(String.format(xpathTemplate, (Object[]) values));
-    }
-
     public void openUrl(String url) {
         driver.get(url);
         logger.info("Access to {}\n", url);
+    }
+
+    public void switchToWindow(int index) {
+        List<String> activeWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(activeWindows.get(index));
+    }
+
+    public void switchToWindow(String pageTitle) {
+        Set<String> activeWindows = driver.getWindowHandles();
+
+        for (String window : activeWindows) {
+            String windowTitle = driver.switchTo().window(window).getTitle();
+            assert windowTitle != null;
+            if (windowTitle.toLowerCase().contains(pageTitle.toLowerCase())) {
+                break;
+            }
+        }
     }
 
     public WebElement waitForElementPresence(By locator) {
@@ -52,6 +66,14 @@ public class BasePage extends Abstraction {
         wait.until(ExpectedConditions.stalenessOf(element));
     }
 
+    public boolean waitForUrlContains(String url) {
+        return wait.until(ExpectedConditions.urlContains(url));
+    }
+
+    public boolean waitForTitleContains(String title) {
+        return wait.until(ExpectedConditions.titleContains(title));
+    }
+
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
@@ -60,9 +82,8 @@ public class BasePage extends Abstraction {
         return waitForElementVisibility(locator).getText();
     }
 
-    public String getTextAfterChange(By locator) {
-        WebElement element = waitForElementPresence(locator);
-        waitForElementStaleness(element);
+    public String getTextWhenChangeForm(By locator, String oldText) {
+        wait.until(ExpectedConditions.not((ExpectedConditions.textToBe(locator, oldText))));
 
         return waitForElementVisibility(locator).getText();
     }
@@ -88,6 +109,7 @@ public class BasePage extends Abstraction {
 
     public void clickBackButtonOfBrowser() {
         driver.navigate().back();
+        logger.info("Click back button\n");
     }
 
     public void inputTextInToTextBox(By locator, String text) {
@@ -114,5 +136,9 @@ public class BasePage extends Abstraction {
 
     public boolean isElementSelected(By locator) {
         return waitForElementPresence(locator).isSelected();
+    }
+
+    protected By getDynamicXpath(String xpathTemplate, String... values) {
+        return By.xpath(String.format(xpathTemplate, (Object[]) values));
     }
 }
