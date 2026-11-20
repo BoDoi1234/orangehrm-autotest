@@ -1,7 +1,7 @@
 package demo.orangehrm.leave;
 
 import demo.orangehrm.pages.dashboard.DashboardPage;
-import demo.orangehrm.component.Calendar;
+import demo.orangehrm.pages.component.Calendar;
 import demo.orangehrm.pages.leave.ApplyLeavePage;
 import demo.orangehrm.pages.leave.LeavePage;
 import demo.orangehrm.pages.authentication.LoginPage;
