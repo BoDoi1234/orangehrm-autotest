@@ -107,9 +107,10 @@ public class BasePage extends Abstraction {
         return waitForElementPresence(locator).getAttribute(attributeName);
     }
 
-    public void clickBackButtonOfBrowser() {
+    public void clickBackButtonAndWaitForUrlContains(String expectedUrlPart) {
         driver.navigate().back();
-        logger.info("Click back button\n");
+        logger.info("Click back button and wait for URL contains: {}\n", expectedUrlPart);
+        waitForUrlContains(expectedUrlPart);
     }
 
     public void inputTextInToTextBox(By locator, String text) {

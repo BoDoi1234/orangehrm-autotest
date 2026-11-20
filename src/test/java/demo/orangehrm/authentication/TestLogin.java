@@ -51,14 +51,13 @@ public class TestLogin {
 
         List<String> actualWidgetNameList = dashboardPage.getAllWidgetName();
         List<String> expectedWidgetNameList = List.of(TestDataHelper.getDataOf("admin_dashboard_page_widget_name_list").split(", "));
-
         Assert.assertTrue(actualWidgetNameList.containsAll(expectedWidgetNameList));
 
         loginPage = dashboardPage.logoutAccount();
         String currentUrl = loginPage.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("login"));
 
-        loginPage.clickBackButtonOfBrowser();
+        loginPage.clickBackButtonAndWaitForUrlContains("login");
         currentUrl = loginPage.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("login"));
     }
