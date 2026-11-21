@@ -49,17 +49,19 @@ public class TestLogin {
         DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataOf("admin_username"),
                 TestDataHelper.getDataOf("admin_password"));
 
+        // Verify Dashboard Widgets
         List<String> actualWidgetNameList = dashboardPage.getAllWidgetName();
         List<String> expectedWidgetNameList = List.of(TestDataHelper.getDataOf("admin_dashboard_page_widget_name_list").split(", "));
         Assert.assertTrue(actualWidgetNameList.containsAll(expectedWidgetNameList));
 
+        // Logout account
         loginPage = dashboardPage.logoutAccount();
         String currentUrl = loginPage.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("login"));
 
-        loginPage.clickBackButtonAndWaitForUrlContains("login");
-        currentUrl = loginPage.getCurrentUrl();
-        Assert.assertTrue(currentUrl.contains("login"));
+        // Click back button and verify url
+        loginPage.clickBackButton();
+        Assert.assertTrue(loginPage.waitForUrlContains("login"));
     }
 
     @Test(description = "UI_TC")
