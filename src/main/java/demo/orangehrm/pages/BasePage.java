@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,11 +18,17 @@ public class BasePage extends Abstraction {
     private final Logger logger = LogManager.getLogger(BasePage.class);
     protected final WebDriver driver;
     protected final WebDriverWait wait;
+    protected final Actions actions;
     public static final String testedLanguage = System.getProperty("language", "english");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        actions = new Actions(driver);
+    }
+
+    public Actions getActions() {
+        return actions;
     }
 
     public void openUrl(String url) {
@@ -72,6 +79,10 @@ public class BasePage extends Abstraction {
 
     public boolean waitForTitleContains(String title) {
         return wait.until(ExpectedConditions.titleContains(title));
+    }
+
+    public void waitForAttributeContains(WebElement element, String attributeName, String expectedValue) {
+        wait.until(ExpectedConditions.attributeContains(element, attributeName, expectedValue));
     }
 
     public String getCurrentUrl() {
