@@ -58,7 +58,7 @@ public class TestLeaveFeature {
         calendar.selectDay("4");
 
         // 5.Observe balance error and attempt submit
-        String leaveBalanceText = applyLeavePage.getLeaveBalanceTextAfterChange();
-        Assert.assertEquals(leaveBalanceText, "Balance not sufficient");
+        String leaveBalanceError = applyLeavePage.getLeaveBalanceTextAfterSelectDate();
+        Assert.assertEquals(leaveBalanceError, "Balance not sufficient");
     }
 }

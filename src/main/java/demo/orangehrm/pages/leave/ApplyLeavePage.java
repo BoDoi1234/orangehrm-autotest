@@ -20,7 +20,7 @@ public class ApplyLeavePage extends LeavePage {
         return leaveBalanceText;
     }
 
-    public String getLeaveBalanceTextAfterChange() {
+    public String getLeaveBalanceTextAfterSelectDate() {
         String oldLeaveBalanceText = getText(leaveBalanceSelector);
         String leaveBalanceText = getTextWhenChangeForm(leaveBalanceSelector, oldLeaveBalanceText);
         logger.info("Leave Balance Text After Change: {}", leaveBalanceText);
