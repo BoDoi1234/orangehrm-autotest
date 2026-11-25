@@ -60,7 +60,7 @@ public class TestLogin {
         Assert.assertTrue(currentUrl.contains("login"));
 
         // Click back button and verify url
-        loginPage.clickBackButton();
+        loginPage.clickBackAndWaitForPopState();
         Assert.assertTrue(loginPage.waitForUrlContains("login"));
     }
 
