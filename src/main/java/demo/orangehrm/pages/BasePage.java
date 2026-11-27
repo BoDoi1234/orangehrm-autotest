@@ -161,14 +161,14 @@ public class BasePage extends Abstraction {
     public void clickBackAndWaitForPopState() {
         js.executeScript(
                 "window.__backCompleted = false;" +
-                        "window.addEvenListener('popstate', function() { window.__backCompleted = true; }, { once: true })"
+                        "window.addEventListener('popstate', function() { window.__backCompleted = true; }, { once: true })"
         );
 
         driver.navigate().back();
         logger.info("Click back button\n");
 
         wait.until(webDriver -> Boolean.TRUE.equals(
-                ((JavascriptExecutor) webDriver).executeAsyncScript("return window.__backCompleted;")
+                ((JavascriptExecutor) webDriver).executeScript("return window.__backCompleted;")
         ));
     }
 

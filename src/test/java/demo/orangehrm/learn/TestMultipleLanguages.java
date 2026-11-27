@@ -22,7 +22,7 @@ public class TestMultipleLanguages {
 
         // Open url
         AgodaLandingPage agodaLandingPage = new AgodaLandingPage(driver);
-        agodaLandingPage.openUrl(TestDataHelper.getDataOf("agoda_url"));
+        agodaLandingPage.openUrl(TestDataHelper.getDataFromPropertiesOf("agoda_url"));
 
         // Set test language
         agodaLandingPage.setAgodaAppLanguage(BasePage.testedLanguage);
@@ -38,13 +38,28 @@ public class TestMultipleLanguages {
         AgodaLandingPage agodaLandingPage = new AgodaLandingPage(driver);
 
         // Verify Welcome Message
-        String actualWelcomeMsg = agodaLandingPage.getWelcomeMessageAfterChangeLanguage();
-        String designWelcomeMessage = TestDataHelper.getDataOf("agoda_landing_page_welcome_message");
+        String actualWelcomeMsg = agodaLandingPage.getWelcomeMessage();
+        String designWelcomeMessage = TestDataHelper.getDataFromPropertiesOf("agoda_landing_page_welcome_message");
         Assert.assertEquals(actualWelcomeMsg.toUpperCase(), designWelcomeMessage);
 
         // Verify Tab List
         List<String> actualTabList = agodaLandingPage.getAllTabName();
-        List<String> expectedTabList = List.of(TestDataHelper.getDataOf("agoda_landing_page_tab_name_list").split(", "));
+        List<String> expectedTabList = List.of(TestDataHelper.getDataFromPropertiesOf("agoda_landing_page_tab_name_list").split(", "));
+        Assert.assertEquals(actualTabList, expectedTabList);
+    }
+
+    @Test
+    void testLandingPageDisplayUsingJsonTestData() {
+        AgodaLandingPage agodaLandingPage = new AgodaLandingPage(driver);
+
+        // Verify Welcome Message
+        String actualWelcomeMsg = agodaLandingPage.getWelcomeMessage();
+        String designWelcomeMessage = TestDataHelper.getTestDataOf("agoda.pages.landing.welcome_message");
+        Assert.assertEquals(actualWelcomeMsg.toUpperCase(), designWelcomeMessage);
+
+        // Verify Tab List
+        List<String> actualTabList = agodaLandingPage.getAllTabName();
+        List<String> expectedTabList = List.of(TestDataHelper.getTestDataOf("agoda.pages.landing.tab_name_list").split(", "));
         Assert.assertEquals(actualTabList, expectedTabList);
     }
 }

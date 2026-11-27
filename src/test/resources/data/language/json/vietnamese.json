@@ -1,0 +1,16 @@
+{
+  "page": {
+    "dashboard": {
+      "title": "Dashboard"
+    }
+  },
+
+  "agoda": {
+    "pages": {
+      "landing": {
+        "welcome_message": "RONG CHƠI BỐN PHƯƠNG, GIÁ VẪN \"YÊU THƯƠNG\"",
+        "tab_name_list": "Khách sạn, Vé máy bay, Nhà và Căn hộ, Máy bay + K.sạn, Hoạt động, Đưa đón sân bay"
+      }
+    }
+  }
+}

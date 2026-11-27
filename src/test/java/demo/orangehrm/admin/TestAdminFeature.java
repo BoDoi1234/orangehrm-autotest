@@ -21,7 +21,7 @@ public class TestAdminFeature {
         driver = driverUtils.initBrowser();
 
         // Open login url
-        String url = TestDataHelper.getDataOf("orange_url");
+        String url = TestDataHelper.getDataFromPropertiesOf("orange_url");
         new LoginPage(driver).openUrl(url);
     }
 
@@ -36,8 +36,8 @@ public class TestAdminFeature {
         LoginPage loginPage = new LoginPage(driver);
 
         // Login as Admin User
-        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataOf("admin_username"),
-                TestDataHelper.getDataOf("admin_password"));
+        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataFromPropertiesOf("admin_username"),
+                TestDataHelper.getDataFromPropertiesOf("admin_password"));
 
         // Navigate to Admin Page
         AdminPage adminPage = dashboardPage.getNavigationPanel().clickAdminMenu();

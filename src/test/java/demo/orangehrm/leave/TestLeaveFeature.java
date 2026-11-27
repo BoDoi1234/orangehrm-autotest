@@ -25,7 +25,7 @@ public class TestLeaveFeature {
 
 
         // Open login url
-        String url = TestDataHelper.getDataOf("orange_url");
+        String url = TestDataHelper.getDataFromPropertiesOf("orange_url");
         new LoginPage(driver).openUrl(url);
     }
 
@@ -40,8 +40,8 @@ public class TestLeaveFeature {
         LoginPage loginPage = new LoginPage(driver);
 
         // 1. Login as ESS User
-        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataOf("ess_username"),
-                TestDataHelper.getDataOf("ess_password"));
+        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataFromPropertiesOf("ess_username"),
+                TestDataHelper.getDataFromPropertiesOf("ess_password"));
 
         // 2. Navigate to Leave Page > Apply
         LeavePage leavePage = dashboardPage.getNavigationPanel().clickLeaveMenu();

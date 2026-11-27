@@ -13,7 +13,7 @@ public class AgodaLandingPage extends BasePage {
     private final Logger logger = LogManager.getLogger(AgodaLandingPage.class);
     private final By welcomeMsg = By.cssSelector("h1");
     private final By tabList = By.xpath("//div[@role='tablist']/div//p");
-    private final By closeDownloadButton = By.xpath("//button[contains(@data-element-name, \"app-download\")]");
+//    private final By closeDownloadButton = By.xpath("//button[contains(@data-element-name, \"app-download\")]");
 
     public AgodaLandingPage(WebDriver driver) {
         super(driver);
@@ -22,22 +22,15 @@ public class AgodaLandingPage extends BasePage {
     @Override
     public void openUrl(String url) {
         driver.get(url);
-        WebElement closeDownloadAppBtn = waitForElementVisibility(closeDownloadButton);
-        if (closeDownloadAppBtn.isDisplayed()) {
-            closeDownloadAppBtn.click();
-        }
+//        WebElement closeDownloadAppBtn = waitForElementVisibility(closeDownloadButton);
+//        if (closeDownloadAppBtn.isDisplayed()) {
+//            closeDownloadAppBtn.click();
+//        }
     }
 
     public String getWelcomeMessage() {
         String welcomeMessage = getText(welcomeMsg);
         logger.info("Welcome Message is {}\n", welcomeMessage);
-        return welcomeMessage;
-    }
-
-    public String getWelcomeMessageAfterChangeLanguage() {
-        String oldWelcomeMessage = getText(welcomeMsg);
-        String welcomeMessage = getTextWhenChangeForm(welcomeMsg, oldWelcomeMessage);
-        logger.info("Welcome Message is after change language {}\n", welcomeMessage);
         return welcomeMessage;
     }
 
@@ -63,6 +56,7 @@ public class AgodaLandingPage extends BasePage {
             click(AgodaUserMenu.changeLanguageButton);
             By targetLanguageLocator = By.xpath(String.format("//p[text()='%s']", convertedLanguage));
             click(targetLanguageLocator);
+            waitForPageReady();
         } else {
             click(AgodaHeader.userMenuButton);
             logger.info("Language is already {}\n", convertedLanguage);

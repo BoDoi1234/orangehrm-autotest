@@ -1,0 +1,25 @@
+{
+  "url": {
+    "agoda_home": "https://www.agoda.com/vi-vn/?site_id=1922896&tag=428762ec-5187-4bca-a1d2-edfbd6779536&gad_source=1&gad_campaignid=21035110713&gbraid=0AAAAAD-GdVkXcbcyYgODKYtzTkK-YefsJ&gclid=Cj0KCQiAwdDXBhDuARIsAFdLukkjrvE5oERbDCCqgi7EIDjqPqi-d1c7Blxa5kUFy8SQAnCcTnjjbTwaAlsZEALw_wcB&ds=TOlC%2FAj6fdTv1Ya5"
+  },
+  "account": {
+    "admin": {
+      "username":  "Admin",
+      "password": "admin123"
+    },
+
+    "ess": {
+      "username": "FMLName",
+      "password": "ess12345"
+    },
+
+    "customer_support": {
+      "username": "support1",
+      "password": "support123"
+    }
+  },
+
+  "admin_dashboard": {
+    "widget_name_list": "Time at Work, My Actions, Quick Launch, Buzz Latest Posts, Employees on Leave Today, Employee Distribution by Sub Unit, Employee Distribution by Location"
+  }
+}

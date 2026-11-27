@@ -20,7 +20,7 @@ public class TestLogin {
         driver = driverUtils.initBrowser();
 
         // Open login url
-        String url = TestDataHelper.getDataOf("orange_url");
+        String url = TestDataHelper.getDataFromPropertiesOf("orange_url");
         new LoginPage(driver).openUrl(url);
     }
 
@@ -46,12 +46,13 @@ public class TestLogin {
         LoginPage loginPage = new LoginPage(driver);
 
         // Login with Admin account
-        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataOf("admin_username"),
-                TestDataHelper.getDataOf("admin_password"));
+        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(
+                TestDataHelper.getDataFromPropertiesOf("admin_username"),
+                TestDataHelper.getDataFromPropertiesOf("admin_password"));
 
         // Verify Dashboard Widgets
         List<String> actualWidgetNameList = dashboardPage.getAllWidgetName();
-        List<String> expectedWidgetNameList = List.of(TestDataHelper.getDataOf("admin_dashboard_page_widget_name_list").split(", "));
+        List<String> expectedWidgetNameList = List.of(TestDataHelper.getDataFromPropertiesOf("admin_dashboard_page_widget_name_list").split(", "));
         Assert.assertTrue(actualWidgetNameList.containsAll(expectedWidgetNameList));
 
         // Logout account
@@ -78,5 +79,30 @@ public class TestLogin {
 
         String usernameAttributeName = loginPage.getAttributeNameOfUsername();
         Assert.assertEquals(usernameAttributeName, "username");
+    }
+
+    @Test(description = "Admin Login, Dashboard Widget Verification, and Logout")
+    void testAuthenticationWithAdminAccountAndLogoutUsingJson() {
+        LoginPage loginPage = new LoginPage(driver);
+
+        // Login with Admin account
+        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(
+                TestDataHelper.getTestDataOf("account.admin.username"),
+                TestDataHelper.getTestDataOf("account.admin.password")
+        );
+
+        // Verify Dashboard Widgets
+        List<String> actualWidgetNameList = dashboardPage.getAllWidgetName();
+        List<String> expectedWidgetNameList = List.of(TestDataHelper.getTestDataOf("widget_name_list").split(", "));
+        Assert.assertTrue(actualWidgetNameList.containsAll(expectedWidgetNameList));
+
+        // Logout account
+        loginPage = dashboardPage.logoutAccount();
+        String currentUrl = loginPage.getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("login"));
+
+        // Click back button and verify url
+        loginPage.clickBackAndWaitForPopState();
+        Assert.assertTrue(loginPage.waitForUrlContains("login"));
     }
 }

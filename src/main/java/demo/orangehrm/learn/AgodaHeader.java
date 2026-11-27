@@ -13,6 +13,4 @@ public class AgodaHeader extends BasePage {
     public AgodaHeader(WebDriver driver) {
         super(driver);
     }
-
-
 }
