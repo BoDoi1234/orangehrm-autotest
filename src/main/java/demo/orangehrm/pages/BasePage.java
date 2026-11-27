@@ -78,6 +78,10 @@ public class BasePage extends Abstraction {
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
+    public void waitForElementStale(WebElement element) {
+        wait.until(ExpectedConditions.stalenessOf(element));
+    }
+
     public void waitForPageReady() {
         wait.until(d -> Objects.requireNonNull(((JavascriptExecutor) d).executeScript("return document.readyState")).equals("complete"));
         wait.until(d -> (Boolean) ((JavascriptExecutor) d).executeScript(

@@ -55,8 +55,10 @@ public class AgodaLandingPage extends BasePage {
         if (!currentLanguage.equalsIgnoreCase(convertedLanguage)) {
             click(AgodaUserMenu.changeLanguageButton);
             By targetLanguageLocator = By.xpath(String.format("//p[text()='%s']", convertedLanguage));
+            WebElement welcomeMessage = waitForElementVisibility(welcomeMsg);
             click(targetLanguageLocator);
-            waitForPageReady();
+
+            waitForElementStale(welcomeMessage);
         } else {
             click(AgodaHeader.userMenuButton);
             logger.info("Language is already {}\n", convertedLanguage);
