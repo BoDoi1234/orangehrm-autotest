@@ -1,5 +1,6 @@
 package demo.orangehrm.leave;
 
+import demo.orangehrm.pages.component.Toast;
 import demo.orangehrm.pages.dashboard.DashboardPage;
 import demo.orangehrm.pages.component.Calendar;
 import demo.orangehrm.pages.leave.ApplyLeavePage;
@@ -51,14 +52,17 @@ public class TestLeaveFeature {
 
         // 4. Select From Date and To Date
         Calendar calendar = applyLeavePage.clickFromDateSelector(); // From Date
-        calendar.selectDay("16");
+        calendar.selectDay("22");
 
         calendar = applyLeavePage.clickToDateSelector(); // To Date
-        calendar.nextMonth();
-        calendar.selectDay("4");
+        calendar.selectDate("2026", "12", "10");
 
         // 5.Observe balance error and attempt submit
         String leaveBalanceError = applyLeavePage.getLeaveBalanceTextAfterSelectDate();
         Assert.assertEquals(leaveBalanceError, "Balance not sufficient");
+
+        Toast errorToast = applyLeavePage.applyLeaveBalance();
+        Assert.assertEquals(errorToast.getTypeOfToast(), "Error");
+        Assert.assertEquals(errorToast.getMessageOfToast(), "Leave Balance Exceeded");
     }
 }

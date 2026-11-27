@@ -14,6 +14,7 @@ public class LeavePage extends BaseLayoutPage {
     private final By leaveTypeSelector = new ByChained(getLocatorByLabel("Leave Type"), By.xpath("./*[contains(@class, 'select-wrapper')]"));
     private final By fromDateSelector = new ByChained(getLocatorByLabel("From Date"), By.xpath("./*[contains(@class, 'date-wrapper')]"));
     private final By toDateSelector = new ByChained(getLocatorByLabel("To Date"), By.xpath("./*[contains(@class, 'date-wrapper')]"));
+    private final By submitButton = By.xpath("//*[contains(@class, 'form-actions')]/button[@type='submit']");
 
     public LeavePage(WebDriver driver) {
         super(driver);
@@ -52,5 +53,9 @@ public class LeavePage extends BaseLayoutPage {
         click(toDateSelector);
         logger.info("Click To Date Input\n");
         return new Calendar(driver);
+    }
+
+    public void submitForm() {
+        click(submitButton);
     }
 }
