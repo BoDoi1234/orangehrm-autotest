@@ -22,7 +22,14 @@ public class TestAdminFeature {
 
         // Open login url
         String url = TestDataHelper.getDataFromPropertiesOf("orange_url");
-        new LoginPage(driver).openUrl(url);
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.openUrl(url);
+
+        // Login with Admin account
+        loginPage.loginWithValidCredentials(
+                TestDataHelper.getDataFromPropertiesOf("admin_username"),
+                TestDataHelper.getDataFromPropertiesOf("admin_password")
+        );
     }
 
     @AfterMethod
@@ -33,11 +40,7 @@ public class TestAdminFeature {
 
     @Test
     void testRecordCheckboxBehavior() {
-        LoginPage loginPage = new LoginPage(driver);
-
-        // Login as Admin User
-        DashboardPage dashboardPage = loginPage.loginWithValidCredentials(TestDataHelper.getDataFromPropertiesOf("admin_username"),
-                TestDataHelper.getDataFromPropertiesOf("admin_password"));
+        DashboardPage dashboardPage = new DashboardPage(driver);
 
         // Navigate to Admin Page
         AdminPage adminPage = dashboardPage.getNavigationPanel().clickAdminMenu();
